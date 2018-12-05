@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Tema
+    </title>
+
+</head>
+
+<body>
+    <div id="div1">
+        Bun venit
+    </div>
+
+    <script type="text/javascript">
+        window.addEventListener('load', onPageLoad);
+
+        function onPageLoad() {
+            console.info('Auzi ca e gata pagina')
+
+            var div1 = document.getElementById("div1");
+            div1.style.backgroundColor = 'red';
+            div1.style.height = '100vh';
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+            
+            function writeSomethingRandom(){
+                var letters='abcdefghijklmnopqrstuvwxyz';
+                var word=''
+                for (var i=0;i<Math.floor(Math.random() * 16);i++)
+                    word+=letters[Math.floor(Math.random() * 16)]
+                word+=' '
+                return word
+            }
+
+            div1.addEventListener('mousemove', function (e) {
+                div1.style.backgroundColor = getRandomColor()
+                div1.append(writeSomethingRandom())
+            })
+
+        };
+
+    </script>
+</body>
+
+</html>
