@@ -8,12 +8,29 @@
 </head>
 
 <body>
-    <div id="div1" style="background-color: red;">
-        Hello Javascript
+    <div id="div1">
+        Hello Javascript1
     </div>
+    <div id="div2">
+        Hello Javascript2
+    </div>
+    <div id="div3">
+        Hello Javascript3
+    </div>
+    <div id="div4">
+        Hello Javascript4
+    </div>
+    <div id="div5">
+        Hello Javascript5
+    </div>
+    <button id="b1" onclick="btnClick()">Click me </button>
 
     <script type="text/javascript">
         window.addEventListener('load', onPageLoad);
+
+        function btnClick() {
+            console.log("Button clicked")
+        }
 
         function onPageLoad() {
             console.info('Auzi ca e gata pagina')
