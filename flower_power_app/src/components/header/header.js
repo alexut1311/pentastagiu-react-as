@@ -2,9 +2,10 @@ import React, {
     Component
 } from 'react';
 import './header.css';
-import logo from '../../logo.svg';
+import UserInfo from './userinfo.js'
+//import logo from '../../logo.svg';
 
-class Header extends Component {
+/* class Header extends Component {
     render(){
         return(
             <header className="App-header">
@@ -23,5 +24,19 @@ class Header extends Component {
         </header>
         )
     }
-}
+} */
+class Header extends Component {
+  render(){
+      return(
+
+
+<UserInfo
+        isLoggedIn={this.props.isLoggedIn}
+        buttonHandler={this.props.buttonHandler}
+      />
+      )
+    }
+  }  
+
+
 export default Header;

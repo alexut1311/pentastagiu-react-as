@@ -102,6 +102,7 @@ class App extends Component {
     super(props);
     this.handleClick = this.handleClick.bind(this)
     this.handleChangeTitle = this.handleChangeTitle.bind(this)
+    this.isLoggedIn = false
     this.state={
       name: 'Alex',
       allData: data,
@@ -113,6 +114,7 @@ class App extends Component {
   }
   handleChangeTitle(event){
     this.setState({title: event.target.value})
+
     
 
   }
@@ -120,13 +122,13 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Content 
+        {/* <Content 
         name={this.state.name} 
         handleClick={this.handleClick} 
         allData={this.state.allData} 
         title={this.state.title} 
         handleChangeTitle={this.handleChangeTitle} 
-        />
+        /> */}
       </div>
     );
   }
