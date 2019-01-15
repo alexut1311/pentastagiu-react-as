@@ -1,6 +1,6 @@
-
-  
-  .content {
-    display: grid;
+.content {
+    display: auto;
     margin: auto;
   }
+
+  

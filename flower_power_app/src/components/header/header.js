@@ -1,42 +1,18 @@
-import React, {
-    Component
-} from 'react';
+import React from 'react';
 import './header.css';
-import UserInfo from './userinfo.js'
-//import logo from '../../logo.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/fontawesome-free-solid';
 
-/* class Header extends Component {
-    render(){
-        return(
-            <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+class Header extends React.PureComponent {
+render(){
+    console.log('render Header');
+    return(
+        <header className="App-header">
+          <h4 className="logo-text">Flower power app</h4>
+          <FontAwesomeIcon icon={faShoppingCart} className="shopping-cart"/>
+        
         </header>
-        )
-    }
-} */
-class Header extends Component {
-  render(){
-      return(
-
-
-<UserInfo
-        isLoggedIn={this.props.isLoggedIn}
-        buttonHandler={this.props.buttonHandler}
-      />
-      )
-    }
-  }  
-
-
+    )
+}
+}
 export default Header;
