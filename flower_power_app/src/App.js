@@ -8,7 +8,7 @@ import './App.css';
 import {
   connect
 } from "react-redux";
-import { showLoader, hideLoader } from './Redux/Actions/ui.js'
+import { showLoader, hideLoader, openEditMode, closeEditMode } from './Redux/Actions/ui.js'
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class App extends Component {
       name: 'Bogdan',
       allData: [],
       title: 'Super Bogdan',
-      setEditMode: false,
       dataById: {}
     }
   }
@@ -38,9 +37,9 @@ class App extends Component {
   handleClick(id) {
     this.setState((prevState) => {
       let data = prevState.allData.find((item) => item.id === id);
+      this.props._startEditMode()
       return {
         dataById: data || {},
-        setEditMode: true,
       }
     });
   }
@@ -58,7 +57,7 @@ class App extends Component {
 
   onSave() {
     this.props._startSave();
-    setTimeout(this.props._stopSave, 2000)
+    this.props._stopEditMode();
   }
 
   render() {
@@ -66,7 +65,7 @@ class App extends Component {
       <div className="App">
       <Header />
       {
-        this.state.setEditMode ? 
+        this.props.ui.setEditMode ? 
           <EditCard {...this.state.dataById} onNameChange={this.onNameChange} onSave={this.onSave}/> : 
           <Content 
             name={this.state.name} 
@@ -85,7 +84,9 @@ const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
   _startSave: () => dispatch(showLoader()),
-  _stopSave: () => dispatch(hideLoader())
+  _stopSave: () => dispatch(hideLoader()),
+  _startEditMode: () => dispatch(openEditMode()),
+  _stopEditMode: () => dispatch(closeEditMode())
 
 });
 
