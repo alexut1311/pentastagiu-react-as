@@ -6,4 +6,6 @@ body {
   line-height: 22px;
   letter-spacing: .4px;
   background: #eee;
+  height: 100%;
+  width: 100%;
 }

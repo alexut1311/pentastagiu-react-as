@@ -1,15 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
 import './content.css';
 
-class Content extends React.PureComponent {
+class Content extends Component {
     render() {
-        const props = this.props;
         return(
           <div className="content">
-                  {props.allData.map(function(item){
-                    return <Card key={item.id} {...item} handleClick={props.handleClick}/>
+                  {this.props.allData.map(function(item){
+                    return <Card key={item.id} {...item} handleClick={this.props.handleClick}/>
                 }, this)}
           </div>
         )
