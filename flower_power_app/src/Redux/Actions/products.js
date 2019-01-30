@@ -10,7 +10,9 @@ export const SAVE_EDIT_PRODUCT = '[product] Save edit product';
 export const SET_SAVE_EDIT_PRODUCT = '[product] Set save edit product';
 export const RESET_PRODUCT = '[product] Reset product';
 export const SET_NAME_PRODUCT = '[product] Set name product';
-
+export const SET_NAME_ADD_PRODUCT = '[product] Set name add product'
+export const SAVE_PRODUCT = '[product] Save product'
+export const SET_DESCRIPTION_ADD_PRODUCT = '[product] Set description product'
 
 
 export const getProducts = () => ({
@@ -44,3 +46,23 @@ export const setNameProduct = (name) => ({
     type: SET_NAME_PRODUCT,
     payload: name,
 })
+
+export const deleteProduct = (id) => ({
+    type: DELETE_PRODUCT,
+    payload: id,
+})
+
+export const setNameAddProduct = (name) => ({
+    type: SET_NAME_ADD_PRODUCT,
+    payload: name,
+})
+
+export const saveProduct = () => ({
+    type: SAVE_PRODUCT,
+})
+
+export const setDescriptionAddProduct = (description) => ({
+    type: SET_DESCRIPTION_ADD_PRODUCT,
+    payload: description,
+})
+
