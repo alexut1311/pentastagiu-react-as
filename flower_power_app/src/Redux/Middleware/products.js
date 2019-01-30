@@ -57,6 +57,23 @@ export const deleteProductById = ({
     dispatch(showLoader());
   }
 };
+export const deleteProductFlow = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === DELETE_PRODUCT) {
+    dispatch(
+      apiRequest(
+        "DELETE",
+        `/products/${action.payload}`,
+        null,
+        FETCH_PRODUCTS_SUCCESS,
+        FETCH_PRODUCTS_ERROR
+      )
+    );
+    dispatch(showLoader());
+  }
+};
+
 export const productById = ({
   dispatch
 }) => next => action => {
