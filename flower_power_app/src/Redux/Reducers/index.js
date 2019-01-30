@@ -1,11 +1,11 @@
-import {
-    combineReducers
-} from 'redux';
-import {
-    uiReducer
-} from './ui';
+import { combineReducers } from 'redux';
+import { uiReducer } from './ui';
+import { productsReducer } from './products';
+
+
+
 
 export const reducers = combineReducers({
-    ui: uiReducer
-
-})
+    ui: uiReducer,
+    products: productsReducer
+});
