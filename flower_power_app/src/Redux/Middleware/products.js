@@ -57,7 +57,7 @@ export const deleteProductById = ({
     dispatch(showLoader());
   }
 };
-export const deleteProductFlow = ({ dispatch }) => next => action => {
+export const deleteProduct = ({ dispatch }) => next => action => {
   next(action);
 
   if (action.type === DELETE_PRODUCT) {
