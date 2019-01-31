@@ -9,10 +9,15 @@ export const DELETE_PRODUCT = '[product] Delete product';
 export const SAVE_EDIT_PRODUCT = '[product] Save edit product';
 export const SET_SAVE_EDIT_PRODUCT = '[product] Set save edit product';
 export const RESET_PRODUCT = '[product] Reset product';
+export const SAVE_PRODUCT = '[product] Save product';
 export const SET_NAME_PRODUCT = '[product] Set name product';
-export const SET_NAME_ADD_PRODUCT = '[product] Set name add product'
-export const SAVE_PRODUCT = '[product] Save product'
-export const SET_DESCRIPTION_ADD_PRODUCT = '[product] Set description product'
+export const SET_DESCRIPTION_PRODUCT = '[product] Set description product';
+export const SET_PRICE_PRODUCT = '[product] Set price product';
+export const SET_PHOTO_URL_PRODUCT = '[product] Set photo url product';
+export const SET_NAME_ADD_PRODUCT = '[product] Set name add product';
+export const SET_DESCRIPTION_ADD_PRODUCT = '[product] Set description add product';
+export const SET_PRICE_ADD_PRODUCT = '[product] Set price add product';
+export const SET_PHOTO_URL_ADD_PRODUCT = '[product] Set photo url add product';
 
 
 export const getProducts = () => ({
@@ -47,9 +52,28 @@ export const setNameProduct = (name) => ({
     payload: name,
 })
 
+export const setDescriptionProduct = (description) => ({
+    type: SET_DESCRIPTION_PRODUCT,
+    payload: description,
+})
+
+export const setPriceProduct = (price) => ({
+    type: SET_PRICE_PRODUCT,
+    payload: price,
+})
+
+export const setPhotoUrlProduct = (photoUrl) => ({
+    type: SET_PHOTO_URL_PRODUCT,
+    payload: photoUrl,
+})
+
 export const deleteProduct = (id) => ({
     type: DELETE_PRODUCT,
     payload: id,
+})
+
+export const saveProduct = () => ({
+    type: SAVE_PRODUCT,
 })
 
 export const setNameAddProduct = (name) => ({
@@ -57,12 +81,20 @@ export const setNameAddProduct = (name) => ({
     payload: name,
 })
 
-export const saveProduct = () => ({
-    type: SAVE_PRODUCT,
-})
-
 export const setDescriptionAddProduct = (description) => ({
     type: SET_DESCRIPTION_ADD_PRODUCT,
     payload: description,
 })
+
+export const setPriceAddProduct = (price) => ({
+    type: SET_PRICE_ADD_PRODUCT,
+    payload: price,
+})
+
+export const setPhotoUrlAddProduct = (photoUrl) => ({
+    type: SET_PHOTO_URL_ADD_PRODUCT,
+    payload: photoUrl,
+})
+
+
 

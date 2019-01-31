@@ -5,20 +5,37 @@ import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/index.js';
 import './App.css';
 import { connect } from "react-redux";
-import { getProducts, setSaveProduct, setNameProduct, deleteProduct, setNameAddProduct, saveProduct, setDescriptionAddProduct } from './Redux/Actions/products';
+import { getProducts, 
+  setSaveProduct, 
+  saveProduct,
+  deleteProduct,
+  setNameProduct, 
+  setDescriptionProduct, 
+  setPriceProduct, 
+  setPhotoUrlProduct,
+  setNameAddProduct, 
+  setDescriptionAddProduct, 
+  setPriceAddProduct, 
+  setPhotoUrlAddProduct, 
+   } from './Redux/Actions/products';
 import { startEditProduct, finishEditProduct } from './Redux/Actions/ui';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
     this.onSave = this.onSave.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
     this.addCard = this.addCard.bind(this);
-    this.nameChange = this.nameChange.bind(this);
     this.saveCard = this.saveCard.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
+    this.onDescriptionChange = this.onDescriptionChange.bind(this);
+    this.onPriceChange = this.onPriceChange.bind(this);
+    this.onPhotoUrlChange = this.onPhotoUrlChange.bind(this);
+    this.nameChange = this.nameChange.bind(this);
     this.descriptionChange = this.descriptionChange.bind(this);
+    this.priceChange = this.priceChange.bind(this);
+    this.photoUrlChange = this.photoUrlChange.bind(this);
     this.state = {
       name: 'Alex',
       title: 'Super Alex',
@@ -41,6 +58,19 @@ class App extends Component {
     const name = event.target.value;
     this.props._setNameProduct(name);
   }
+  onDescriptionChange(event){
+    const name = event.target.value;
+    this.props._setDescriptionProduct(name);
+  }
+  onPriceChange(event){
+    const price = event.target.value;
+    this.props._setPriceProduct(price);
+  }
+  onPhotoUrlChange(event){
+    const photoUrl = event.target.value;
+    this.props._setPhotoUrlProduct(photoUrl);
+  }
+
   deleteProduct(id) {
     this.props._deleteProduct(id) 
    }
@@ -62,17 +92,37 @@ class App extends Component {
     const description = event.target.value;
     this.props._setDescriptionAddProduct(description);
   }
-0
+  priceChange(event){
+    const price = event.target.value;
+    this.props._setPriceAddProduct(price);
+  }
+  photoUrlChange(event){
+    const photoUrl = event.target.value;
+    this.props._setPhotoUrlAddProduct(photoUrl);
+  }
+
+
+
   render() {
     console.log(this.props)
     return (
       <div className="App">
       <Header />
       <button onClick={this.addCard} className="button-add">Add product</button>
-      {this.state.openAddCard ? <AddCard nameChange={this.nameChange} saveCard={this.saveCard} descriptionChange={this.descriptionChange}/> : null}
+      {this.state.openAddCard ? <AddCard nameChange={this.nameChange}
+       descriptionChange={this.descriptionChange}
+        priceChange={this.priceChange} 
+        photoUrlChange={this.photoUrlChange} 
+        saveCard={this.saveCard}/> : null}
       {
         this.props.ui.productEdit ? 
-          <EditCard {...this.state.dataById} onNameChange={this.onNameChange} onSave={this.onSave} product={this.props.product}/> : 
+          <EditCard {...this.state.dataById} 
+          onNameChange={this.onNameChange} 
+          onDescriptionChange={this.onDescriptionChange}
+          onPriceChange={this.onPriceChange}
+          onDescriptionChange={this.onDescriptionChange}
+          onSave={this.onSave} 
+          product={this.props.product}/> : 
           this.props.ui.showSpinner ? 
             <div className="loading-spinner"><div></div><div></div><div></div><div></div></div>
           : 
@@ -102,11 +152,16 @@ const mapDispatchToProps = (dispatch) => ({
     _startEditProduct: (id) => dispatch(startEditProduct(id)),
     _finishEditProduct: () => dispatch(finishEditProduct()),
     _setSaveProduct: () => dispatch(setSaveProduct()),
-    _setNameProduct: (name) => dispatch(setNameProduct(name)),
-    _deleteProduct: (id) => dispatch(deleteProduct(id)),
-    _setNameAddProduct: (id) => dispatch(setNameAddProduct(id)),
     _saveProduct: () => dispatch(saveProduct()),
+    _deleteProduct: (id) => dispatch(deleteProduct(id)),
+    _setNameProduct: (name) => dispatch(setNameProduct(name)),
+    _setDescriptionProduct: (description) => dispatch(setDescriptionProduct(description)),
+    _setPriceProduct: (price) => dispatch(setPriceProduct(price)),
+    _setPhotoUrlProduct: (photoUrl) => dispatch(setPhotoUrlProduct(photoUrl)),
+    _setNameAddProduct: (id) => dispatch(setNameAddProduct(id)),
     _setDescriptionAddProduct: (description) => dispatch(setDescriptionAddProduct(description)),
+    _setPriceAddProduct: (price) => dispatch(setPriceAddProduct(price)),
+    _setPhotoUrlAddProduct: (photoUrl) => dispatch(setPhotoUrlAddProduct(photoUrl)),
   });
 
 
