@@ -18,7 +18,7 @@ import { getProducts,
   setPriceAddProduct, 
   setPhotoUrlAddProduct, 
    } from './Redux/Actions/products';
-import { startEditProduct, finishEditProduct } from './Redux/Actions/ui';
+import { startEditProduct, finishEditProduct, startAddProduct } from './Redux/Actions/ui';
 
 class App extends Component {
   constructor(props){
@@ -79,7 +79,7 @@ class App extends Component {
     this.props._setSaveProduct();
   }
   addCard(){
-    this.setState({openAddCard:true})
+    this.props._ap()
   }
   nameChange(event){
     const name=event.target.value;
@@ -109,33 +109,36 @@ class App extends Component {
       <div className="App">
       <Header />
       <button onClick={this.addCard} className="button-add">Add product</button>
-      {this.state.openAddCard ? <AddCard nameChange={this.nameChange}
+      {this.props.ui.productAdd ? <AddCard nameChange={this.nameChange}
        descriptionChange={this.descriptionChange}
         priceChange={this.priceChange} 
         photoUrlChange={this.photoUrlChange} 
-        saveCard={this.saveCard}/> : null}
-      {
+        saveCard={this.saveCard}/> 
+        : 
         this.props.ui.productEdit ? 
-          <EditCard {...this.state.dataById} 
-          onNameChange={this.onNameChange} 
-          onDescriptionChange={this.onDescriptionChange}
-          onPriceChange={this.onPriceChange}
-          onDescriptionChange={this.onDescriptionChange}
-          onSave={this.onSave} 
-          product={this.props.product}/> : 
-          this.props.ui.showSpinner ? 
-            <div className="loading-spinner"><div></div><div></div><div></div><div></div></div>
-          : 
-          <Content 
-            name={this.state.name}
-            handleClick={this.handleClick}
-            allData={this.props.products}
-            product={this.props.product}
-            title={this.state.title}
-            deleteProduct={this.deleteProduct}
-            handleChangeTitle={()=> {}}
-          />
-      }
+        <EditCard {...this.state.dataById} 
+        onNameChange={this.onNameChange} 
+        onDescriptionChange={this.onDescriptionChange}
+        onPriceChange={this.onPriceChange}
+        onDescriptionChange={this.onDescriptionChange}
+        onSave={this.onSave} 
+        product={this.props.product}/> 
+        : 
+        this.props.ui.showSpinner ? 
+          <div className="loading-spinner"><div></div><div></div><div></div><div></div></div>
+        : 
+        <Content 
+          name={this.state.name}
+          handleClick={this.handleClick}
+          allData={this.props.products}
+          product={this.props.product}
+          title={this.state.title}
+          deleteProduct={this.deleteProduct}
+          handleChangeTitle={()=> {}}
+        />}
+      
+        
+      
       </div>
     );
   }
@@ -151,6 +154,7 @@ const mapDispatchToProps = (dispatch) => ({
     _getAllProducts: () => dispatch(getProducts()),
     _startEditProduct: (id) => dispatch(startEditProduct(id)),
     _finishEditProduct: () => dispatch(finishEditProduct()),
+    _ap:() => dispatch(startAddProduct()),
     _setSaveProduct: () => dispatch(setSaveProduct()),
     _saveProduct: () => dispatch(saveProduct()),
     _deleteProduct: (id) => dispatch(deleteProduct(id)),

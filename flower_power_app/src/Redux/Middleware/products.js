@@ -19,7 +19,8 @@ import {
   showLoader,
   hideLoader,
   PRODUCT_EDIT_STARTED,
-  finishEditProduct
+  finishEditProduct,
+  finishAddProduct
 } from "../Actions/ui";
 
 export const getProductsFlow = ({
@@ -43,14 +44,13 @@ export const getProductsFlow = ({
 
 export const deleteProductById = ({ dispatch }) => next => action => {
   next(action);
-
   if (action.type === DELETE_PRODUCT) {
     dispatch(
       apiRequest(
         `/products/${action.payload}`,
         "DELETE",
         null,
-        FETCH_PRODUCTS_SUCCESS,
+        GET_PRODUCTS,
         FETCH_PRODUCTS_ERROR
       )
     );
@@ -131,6 +131,7 @@ export const saveProduct = ({
   if (action.type === SAVE_PRODUCT) {
     const state = getState();
     dispatch(showLoader());
+    dispatch(finishAddProduct());
     dispatch(
       apiRequest(
         "/products",

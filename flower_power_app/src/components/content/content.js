@@ -18,7 +18,7 @@ Content.propTypes = {
     handleClick: PropTypes.func,
     handleChangeTitle: PropTypes.func,
     title: PropTypes.string,
-    allData: PropTypes.any,
+    allData: PropTypes.array,
     product: PropTypes.any,
     deleteProduct: PropTypes.func,
 }
