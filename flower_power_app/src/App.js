@@ -41,7 +41,6 @@ class App extends Component {
       title: 'Super Alex',
       setEditMode: false,
       dataById: {},
-      openAddCard: false,
     }
   }
 
@@ -79,7 +78,7 @@ class App extends Component {
     this.props._setSaveProduct();
   }
   addCard(){
-    this.props._ap()
+    this.props._startAddProduct()
   }
   nameChange(event){
     const name=event.target.value;
@@ -154,7 +153,7 @@ const mapDispatchToProps = (dispatch) => ({
     _getAllProducts: () => dispatch(getProducts()),
     _startEditProduct: (id) => dispatch(startEditProduct(id)),
     _finishEditProduct: () => dispatch(finishEditProduct()),
-    _ap:() => dispatch(startAddProduct()),
+    _startAddProduct:() => dispatch(startAddProduct()),
     _setSaveProduct: () => dispatch(setSaveProduct()),
     _saveProduct: () => dispatch(saveProduct()),
     _deleteProduct: (id) => dispatch(deleteProduct(id)),
