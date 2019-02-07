@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/card';
+import CardProduct from '../card/card';
 import './content.css';
 
 class Content extends Component {
@@ -8,7 +8,7 @@ class Content extends Component {
         return(
           <div className="content">
               {this.props.allData.map(item =>
-                      <Card key={item.id} {...item} deleteProduct={this.props.deleteProduct} handleClick={this.props.handleClick} product={this.props.product}/>)}
+                      <CardProduct key={item.id} {...item} deleteProduct={this.props.deleteProduct} handleClick={this.props.handleClick} product={this.props.product}/>)}
           </div>
         )
     }

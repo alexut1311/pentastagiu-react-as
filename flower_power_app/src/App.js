@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/header/header';
+import Button from '@material-ui/core/Button';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/index.js';
@@ -16,9 +17,11 @@ import { getProducts,
   setNameAddProduct, 
   setDescriptionAddProduct, 
   setPriceAddProduct, 
-  setPhotoUrlAddProduct, 
+  setPhotoUrlAddProduct,
+  resetProduct, 
    } from './Redux/Actions/products';
-import { startEditProduct, finishEditProduct, startAddProduct } from './Redux/Actions/ui';
+import { startEditProduct, finishEditProduct, startAddProduct, finishAddProduct } from './Redux/Actions/ui';
+
 
 class App extends Component {
   constructor(props){
@@ -36,6 +39,8 @@ class App extends Component {
     this.descriptionChange = this.descriptionChange.bind(this);
     this.priceChange = this.priceChange.bind(this);
     this.photoUrlChange = this.photoUrlChange.bind(this);
+    this.stopAddCard = this.stopAddCard.bind(this);
+    this.stopEditCard = this.stopEditCard.bind(this);
     this.state = {
       name: 'Alex',
       title: 'Super Alex',
@@ -78,11 +83,18 @@ class App extends Component {
     this.props._setSaveProduct();
   }
   addCard(){
-    this.props._startAddProduct()
+    this.props._startAddProduct();
+  }
+  stopAddCard(){
+    this.props._finishAddProduct();
+    this.props._resetProduct();
   }
   nameChange(event){
     const name=event.target.value;
     this.props._setNameAddProduct(name);
+  }
+  stopEditCard(){
+    this.props._finishEditProduct();
   }
   saveCard(){
     this.props._saveProduct();
@@ -107,12 +119,19 @@ class App extends Component {
     return (
       <div className="App">
       <Header />
-      <button onClick={this.addCard} className="button-add">Add product</button>
-      {this.props.ui.productAdd ? <AddCard nameChange={this.nameChange}
+      <div className="button-add">
+      <Button variant="outlined" onClick={this.addCard} >
+      Add product
+      </Button>
+      </div>
+      {this.props.ui.productAdd ? 
+      <AddCard nameChange={this.nameChange}
        descriptionChange={this.descriptionChange}
         priceChange={this.priceChange} 
+        stopAddCard={this.stopAddCard}
         photoUrlChange={this.photoUrlChange} 
-        saveCard={this.saveCard}/> 
+        saveCard={this.saveCard}
+        /> 
         : 
         this.props.ui.productEdit ? 
         <EditCard {...this.state.dataById} 
@@ -121,6 +140,7 @@ class App extends Component {
         onPriceChange={this.onPriceChange}
         onDescriptionChange={this.onDescriptionChange}
         onSave={this.onSave} 
+        stopEditCard={this.stopEditCard}
         product={this.props.product}/> 
         : 
         this.props.ui.showSpinner ? 
@@ -154,6 +174,8 @@ const mapDispatchToProps = (dispatch) => ({
     _startEditProduct: (id) => dispatch(startEditProduct(id)),
     _finishEditProduct: () => dispatch(finishEditProduct()),
     _startAddProduct:() => dispatch(startAddProduct()),
+    _finishAddProduct:() => dispatch(finishAddProduct()),
+    _resetProduct:() => dispatch(resetProduct()),
     _setSaveProduct: () => dispatch(setSaveProduct()),
     _saveProduct: () => dispatch(saveProduct()),
     _deleteProduct: (id) => dispatch(deleteProduct(id)),

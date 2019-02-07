@@ -1,41 +1,77 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
 import "./editCard.css";
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+});
 
 class EditCard extends PureComponent {
   render() {
     return (
       <div className="content-card modal">
-        <label>Name</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input
-          value={this.props.product.name}
-          name="name"
-          type="text"
-          onChange={this.props.onNameChange}
-        /><div></div>
-        <label>Description</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input
-          value={this.props.product.description}
-          name="description"
-          type="text"
-          onChange={this.props.onDescriptionChange}
-        /><div></div>
-        <label>Price</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input
-          value={this.props.product.unitPrice}
-          name="name"
-          type="number"
-          pattern="[0-9]"
-          onChange={this.props.onPriceChange}
-        /><div></div>
-        <label>Photo Url</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input
-          value={this.props.product.photoUrl}
-          name="name"
-          type="text"
-          onChange={this.props.onPhotoUrlChange}
-        /><div></div>
-        <button onClick={this.props.onSave}>Save</button>
+
+        <List className={this.props.classes.root}>
+          <ListItem>
+            <ListItemText primary="Name"/>
+            <TextField
+                className={this.props.classes.textField}
+                value={this.props.product.name}
+                onChange={this.props.onNameChange}
+               />
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <ListItemText primary="Description"/>
+              <TextField
+                className={this.props.classes.textField}
+                value={this.props.product.description}
+                onChange={this.props.onDescriptionChange}
+               />
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <ListItemText primary="Price"/>
+            <TextField
+                className={this.props.classes.textField}
+                type="number"
+                value={this.props.product.unitPrice}
+                onChange={this.props.onPriceChange}
+               />
+          </ListItem>
+          <Divider/>
+         <ListItem>
+           <ListItemText primary="Photo Url"/>
+           <TextField
+                className={this.props.classes.textField}
+                value={this.props.product.photoUrl}
+                onChange={this.props.onPhotoUrlChange}
+               />
+         </ListItem>
+       </List>
+        
+        
+        <Button variant="outlined" color="primary" onClick={this.props.onSave}>
+           Save
+        </Button>&nbsp;&nbsp;
+        <Button variant="outlined" color="secondary" onClick={this.props.stopEditCard}>
+            Exit edit product
+        </Button>
       </div>
     );
   }
@@ -47,4 +83,5 @@ EditCard.propTypes = {
   onPriceChange: PropTypes.func,
   onPhotoUrlChange: PropTypes.func,
 };
-export default EditCard;
+export default withStyles(styles)(EditCard);
+

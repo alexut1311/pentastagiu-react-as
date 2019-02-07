@@ -1,6 +1,6 @@
   .App-header {
     background-color: #282c34;
-    min-height: 50px;
+    min-height: 100px;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -11,6 +11,7 @@
     top: 0;
     width: 100%;
     z-index: 1;
+
 }
 
 .App-header + .content {
@@ -29,5 +30,5 @@
 
 .logo-text {
   flex: auto;
-  margin-left: 20px;
+  margin-left: 800px;
 }
