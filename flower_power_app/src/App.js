@@ -76,7 +76,8 @@ class App extends Component {
   }
 
   deleteProduct(id) {
-    this.props._deleteProduct(id) 
+    if (window.confirm('Are you sure you wish to delete this item?'))
+    {this.props._deleteProduct(id) }
    }
 
   onSave() {

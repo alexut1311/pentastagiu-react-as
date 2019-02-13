@@ -11,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+
 const styles = theme => ({
     card: {
       maxWidth: 400,
@@ -64,6 +65,7 @@ class CardProduct extends React.PureComponent {
             Delete
             <DeleteIcon/>
           </Button>
+              Delete
         </CardActions>
       </Card>
               </div>
