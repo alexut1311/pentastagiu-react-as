@@ -18,11 +18,11 @@ export function uiReducer(state = {
         case HIDE_LOADER:
             return {...state, showSpinner: false};  
         case PRODUCT_EDIT_STARTED:
-            return {...state, productEdit: true};     
+            return {...state, productEdit: true, productAdd: false};     
         case PRODUCT_EDIT_FINISHED:
             return {...state, productEdit: false};
         case PRODUCT_ADD_STARTED:
-            return {...state, productAdd: true};
+            return {...state, productAdd: true, productEdit: false};
         case PRODUCT_ADD_FINISHED:
             return {...state, productAdd: false};
         default: 

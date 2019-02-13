@@ -49,7 +49,7 @@ class CardProduct extends React.PureComponent {
          <Typography component="p">
           {props.description}
          </Typography>
-         <Typography gutterBottom variant="h7" component="h2">
+         <Typography gutterBottom variant="h5" component="h2">
           Price {props.unitPrice} EUR
          </Typography>
         </CardContent>
