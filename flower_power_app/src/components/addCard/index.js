@@ -1,79 +1,113 @@
 import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import "./addCard.css";
+import { saveProduct } from "../../Redux/Middleware/products";
+import { resetProduct } from "../../Redux/Actions/products";
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-  },
-  textField: {
-    width: 300,
-  },
-});
 
 class AddCard extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      description: '',
+      unitPrice: '',
+      photoUrl: '',
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onExit = this.onExit.bind(this);
+  }
+  
+  onSubmit(e) {
+    e.preventDefault();
+    const newProduct = this.state;
+    this.props._saveProduct(newProduct);
+    this.props.history.push('/');
+  }
+
+  onExit(){
+    this.props._resetProduct();
+    this.props.history.push('/');
+  }
+
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }  
+
+
   render() {
     return (
       
       <div className="content-card modal">
-        <List className={this.props.classes.root}>
+        <List>
           <ListItem>
             <TextField
-                className={this.props.classes.textField}
+                name="name"
+                style={{ width: 300 }}
                 label="Name"
-                onChange={this.props.nameChange}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
           <ListItem>
               <TextField
-                className={this.props.classes.textField}
+                name="description"
+                style={{ width: 300 }}
                 label="Description"
-                onChange={this.props.descriptionChange}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
           <ListItem>
             <TextField
-                className={this.props.classes.textField}
+                name="unitPrice"
+                style={{ width: 300 }}
                 label="Price"
                 type="number"
-                onChange={this.props.priceChange}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
          <ListItem>
            <TextField
-                className={this.props.classes.textField}
+                name="photoUrl"
+                style={{ width: 300 }}
                 label="Photo Url"
-                onChange={this.props.photoUrlChange}
+                onChange={this.onChange}
                />
          </ListItem>
        </List>
 
-        <Button variant="outlined" color="primary" onClick={this.props.saveCard}>
+        <Button variant="outlined" color="primary" onClick={this.onSubmit}>
            Save
         </Button>&nbsp;&nbsp;
-        <Button variant="outlined" color="secondary" onClick={this.props.stopAddCard}>
+        
+          <Button variant="outlined" color="secondary" onClick={this.onExit}>
             Exit add product
-        </Button>
+          </Button>
+
         
       </div>
     );
   }
 }
-AddCard.propTypes = {
-  name: PropTypes.string,
-  nameChange: PropTypes.func,
-  descriptionChange: PropTypes.func,
-  priceChange: PropTypes.func,
-  photoUrlChange: PropTypes.func,
-};
-export default withStyles(styles)(AddCard);
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  _saveProduct: (product) => dispatch(saveProduct(product)) ,
+  _resetProduct:() => dispatch(resetProduct()),
+})
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(AddCard);

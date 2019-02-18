@@ -123,13 +123,11 @@ export const saveProductById = ({
 };
 
 export const saveProduct = ({
-  dispatch,
-  getState
+  dispatch
 }) => next => action => {
   next(action);
 
   if (action.type === SAVE_PRODUCT) {
-    const state = getState();
     dispatch(showLoader());
     dispatch(finishAddProduct());
     dispatch(
@@ -137,7 +135,7 @@ export const saveProduct = ({
         "/products",
         "POST", {
           body: {
-            product: state.products.product
+            product: action.payload
           }
         },
         GET_PRODUCTS,

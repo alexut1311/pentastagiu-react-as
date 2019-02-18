@@ -72,8 +72,9 @@ export const deleteProduct = (id) => ({
     payload: id,
 })
 
-export const saveProduct = () => ({
+export const saveProduct = (product) => ({
     type: SAVE_PRODUCT,
+    payload: product,
 })
 
 export const setNameAddProduct = (name) => ({

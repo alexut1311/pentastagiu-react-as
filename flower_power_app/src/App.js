@@ -7,44 +7,24 @@ import AddCard from './components/addCard/index.js';
 import './App.css';
 import { connect } from "react-redux";
 import { getProducts, 
-  setSaveProduct, 
-  saveProduct,
   deleteProduct,
-  setNameProduct, 
-  setDescriptionProduct, 
-  setPriceProduct, 
-  setPhotoUrlProduct,
-  setNameAddProduct, 
-  setDescriptionAddProduct, 
-  setPriceAddProduct, 
-  setPhotoUrlAddProduct,
   resetProduct, 
    } from './Redux/Actions/products';
 import { startEditProduct, finishEditProduct, startAddProduct, finishAddProduct } from './Redux/Actions/ui';
+import { Route , Switch } from "react-router-dom";
+
+const NotFound = (props) => (
+  <h2>Page not found</h2>
+);
 
 
 class App extends Component {
   constructor(props){
     super(props);
     this.handleClick = this.handleClick.bind(this);
-    this.onSave = this.onSave.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
     this.addCard = this.addCard.bind(this);
-    this.saveCard = this.saveCard.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onDescriptionChange = this.onDescriptionChange.bind(this);
-    this.onPriceChange = this.onPriceChange.bind(this);
-    this.onPhotoUrlChange = this.onPhotoUrlChange.bind(this);
-    this.nameChange = this.nameChange.bind(this);
-    this.descriptionChange = this.descriptionChange.bind(this);
-    this.priceChange = this.priceChange.bind(this);
-    this.photoUrlChange = this.photoUrlChange.bind(this);
-    this.stopAddCard = this.stopAddCard.bind(this);
-    this.stopEditCard = this.stopEditCard.bind(this);
     this.state = {
-      name: 'Alex',
-      title: 'Super Alex',
-      setEditMode: false,
       dataById: {},
     }
   }
@@ -52,27 +32,9 @@ class App extends Component {
   componentDidMount(){
     this.props._getAllProducts();
   }
-  componentDidUpdate(){
-    console.log(this.state.setEditMode)
-  }
   handleClick(id) {
     this.props._startEditProduct(id);
-  }
-  onNameChange(event){
-    const name = event.target.value;
-    this.props._setNameProduct(name);
-  }
-  onDescriptionChange(event){
-    const name = event.target.value;
-    this.props._setDescriptionProduct(name);
-  }
-  onPriceChange(event){
-    const price = event.target.value;
-    this.props._setPriceProduct(price);
-  }
-  onPhotoUrlChange(event){
-    const photoUrl = event.target.value;
-    this.props._setPhotoUrlProduct(photoUrl);
+    this.props.history.push(`/product/${id}`);
   }
 
   deleteProduct(id) {
@@ -80,37 +42,12 @@ class App extends Component {
     {this.props._deleteProduct(id) }
    }
 
-  onSave() {
-    this.props._setSaveProduct();
-  }
   addCard(){
-    this.props._startAddProduct();
+    this.props.history.push('/add-product');
   }
-  stopAddCard(){
-    this.props._finishAddProduct();
-    this.props._resetProduct();
-  }
-  nameChange(event){
-    const name=event.target.value;
-    this.props._setNameAddProduct(name);
-  }
-  stopEditCard(){
-    this.props._finishEditProduct();
-  }
+
   saveCard(){
     this.props._saveProduct();
-  }
-  descriptionChange(event){
-    const description = event.target.value;
-    this.props._setDescriptionAddProduct(description);
-  }
-  priceChange(event){
-    const price = event.target.value;
-    this.props._setPriceAddProduct(price);
-  }
-  photoUrlChange(event){
-    const photoUrl = event.target.value;
-    this.props._setPhotoUrlAddProduct(photoUrl);
   }
 
 
@@ -121,43 +58,36 @@ class App extends Component {
       <div className="App">
       <Header />
       <div className="button-add">
-      <Button variant="outlined" onClick={this.addCard} >
+      <Button variant="outlined" onClick={this.addCard}>
       Add product
       </Button>
       </div>
-      {this.props.ui.productAdd ? 
-      <AddCard nameChange={this.nameChange}
-       descriptionChange={this.descriptionChange}
-        priceChange={this.priceChange} 
-        stopAddCard={this.stopAddCard}
-        photoUrlChange={this.photoUrlChange} 
-        saveCard={this.saveCard}
-        /> 
-        : 
-        this.props.ui.productEdit ? 
-        <EditCard {...this.state.dataById} 
-        onNameChange={this.onNameChange} 
-        onDescriptionChange={this.onDescriptionChange}
-        onPriceChange={this.onPriceChange}
-        onDescriptionChange={this.onDescriptionChange}
-        onSave={this.onSave} 
-        stopEditCard={this.stopEditCard}
-        product={this.props.product}/> 
-        : 
-        this.props.ui.showSpinner ? 
-          <div className="loading-spinner"><div></div><div></div><div></div><div></div></div>
-        : 
+
+
+      <Switch>
+
+      <Route path="/add-product" component={(props) => (
+        <AddCard history={this.props.history}/>
+      )}/>
+
+      <Route path="/product/:productId" component={(props) => (
+        <EditCard 
+        product={this.props.product} 
+        history={this.props.history}/> 
+      )}/>
+
+      <Route exact path="/" component={() => (
         <Content 
-          name={this.state.name}
-          handleClick={this.handleClick}
-          allData={this.props.products}
-          product={this.props.product}
-          title={this.state.title}
-          deleteProduct={this.deleteProduct}
-          handleChangeTitle={()=> {}}
-        />}
-      
-        
+        handleClick={this.handleClick}
+        allData={this.props.products}
+        product={this.props.product}
+        deleteProduct={this.deleteProduct}
+        handleChangeTitle={()=> {}} />
+      )}/>
+
+      <Route path="*" component={NotFound}/>
+
+      </Switch>
       
       </div>
     );
@@ -177,17 +107,8 @@ const mapDispatchToProps = (dispatch) => ({
     _startAddProduct:() => dispatch(startAddProduct()),
     _finishAddProduct:() => dispatch(finishAddProduct()),
     _resetProduct:() => dispatch(resetProduct()),
-    _setSaveProduct: () => dispatch(setSaveProduct()),
-    _saveProduct: () => dispatch(saveProduct()),
     _deleteProduct: (id) => dispatch(deleteProduct(id)),
-    _setNameProduct: (name) => dispatch(setNameProduct(name)),
-    _setDescriptionProduct: (description) => dispatch(setDescriptionProduct(description)),
-    _setPriceProduct: (price) => dispatch(setPriceProduct(price)),
-    _setPhotoUrlProduct: (photoUrl) => dispatch(setPhotoUrlProduct(photoUrl)),
-    _setNameAddProduct: (id) => dispatch(setNameAddProduct(id)),
-    _setDescriptionAddProduct: (description) => dispatch(setDescriptionAddProduct(description)),
-    _setPriceAddProduct: (price) => dispatch(setPriceAddProduct(price)),
-    _setPhotoUrlAddProduct: (photoUrl) => dispatch(setPhotoUrlAddProduct(photoUrl)),
+    
   });
 
 
