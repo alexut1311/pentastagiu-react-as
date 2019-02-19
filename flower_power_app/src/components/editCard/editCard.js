@@ -32,29 +32,40 @@ class EditCard extends PureComponent {
     super(props);
     this.state = {
       dataById: {},
+      name: this.props.product.name,
+      description: this.props.product.description,
+      unitPrice: this.props.product.unitPrice,
+      photoUrl: this.props.product.photoUrl,
     }
   }
-  onNameChange = (event) => {
-    const name = event.target.value;
-    this.props._setNameProduct(name);
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }  
+
+  onNameChange = () => {
+    this.props._setNameProduct(this.state.name);
   }
 
-  onDescriptionChange = (event) => {
-    const name = event.target.value;
-    this.props._setDescriptionProduct(name);
+  onDescriptionChange = () => {
+    this.props._setDescriptionProduct(this.state.description);
   }
 
-  onPriceChange = (event) => {
-    const price = event.target.value;
-    this.props._setPriceProduct(price);
+  onPriceChange = () => {
+    this.props._setPriceProduct(this.state.unitPrice);
   }
 
-  onPhotoUrlChange = (event) => {
-    const photoUrl = event.target.value;
-    this.props._setPhotoUrlProduct(photoUrl);
+  onPhotoUrlChange = () => {
+    this.props._setPhotoUrlProduct(this.state.photoUrl);
   }
 
   onSave = () => {
+    this.onNameChange();
+    this.onDescriptionChange();
+    this.onPriceChange();
+    this.onPhotoUrlChange();
     this.props._setSaveProduct();
     this.props.history.push('/');
   }
@@ -75,8 +86,8 @@ class EditCard extends PureComponent {
             <TextField
                 name="name"
                 className={this.props.classes.textField}
-                value={this.props.product.name}
-                onChange={this.onNameChange}
+                value={this.state.name}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
@@ -86,8 +97,8 @@ class EditCard extends PureComponent {
                 ref="textField"
                 name="description"
                 className={this.props.classes.textField}
-                value={this.props.product.description}
-                onChange={this.onDescriptionChange}
+                value={this.state.description}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
@@ -97,8 +108,8 @@ class EditCard extends PureComponent {
                 name="unitPrice"
                 className={this.props.classes.textField}
                 type="number"
-                value={this.props.product.unitPrice}
-                onChange={this.onPriceChange}
+                value={this.state.unitPrice}
+                onChange={this.onChange}
                />
           </ListItem>
           <Divider/>
@@ -107,8 +118,8 @@ class EditCard extends PureComponent {
            <TextField
                 name="photoUrl"
                 className={this.props.classes.textField}
-                value={this.props.product.photoUrl}
-                onChange={this.onPhotoUrlChange}
+                value={this.state.photoUrl}
+                onChange={this.onChange}
                />
          </ListItem>
        </List>

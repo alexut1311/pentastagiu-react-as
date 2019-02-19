@@ -19,24 +19,21 @@ class AddCard extends PureComponent {
       unitPrice: '',
       photoUrl: '',
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onExit = this.onExit.bind(this);
   }
   
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
     const newProduct = this.state;
     this.props._saveProduct(newProduct);
     this.props.history.push('/');
   }
 
-  onExit(){
+  onExit = () => {
     this.props._resetProduct();
     this.props.history.push('/');
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
