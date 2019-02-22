@@ -3,7 +3,7 @@ export const UPDATE_PRODUCTS = '[products] Update all products in state';
 export const FETCH_PRODUCTS_SUCCESS = '[products] Get all products was successful';
 export const FETCH_PRODUCTS_ERROR = '[products] Get all products encountered an error';
 export const FETCH_PRODUCT_SUCCESS = '[product] Get product id was successful';
-export const FETCH_PRODUCT_SAVE_EDIT_SUCCESS = '[product] Save edit success';
+export const FETCH_PRODUCT_SAVE_EDIT_SUCCESS = '[product] Edit was successful';
 export const GET_PRODUCT_BY_ID = '[product] Update product by id in state';
 export const DELETE_PRODUCT = '[product] Delete product';
 export const SAVE_EDIT_PRODUCT = '[product] Save edit product';
@@ -18,6 +18,9 @@ export const SET_NAME_ADD_PRODUCT = '[product] Set name add product';
 export const SET_DESCRIPTION_ADD_PRODUCT = '[product] Set description add product';
 export const SET_PRICE_ADD_PRODUCT = '[product] Set price add product';
 export const SET_PHOTO_URL_ADD_PRODUCT = '[product] Set photo url add product';
+export const SAVE_PRODUCT_SUCCESS = '[product] Save was successful'
+export const RESET_PRODUCT_SUCCESS = '[product] Reset product was successful'
+
 
 
 export const getProducts = () => ({
@@ -39,8 +42,9 @@ export const saveProductEdit = (editproduct) => ({
     payload: editproduct,
 })
 
-export const setSaveProduct = () => ({
+export const setSaveProduct = ( history ) => ({
     type: SET_SAVE_EDIT_PRODUCT,
+    history: history,
 })
 
 export const resetProduct = () => ({
@@ -72,9 +76,10 @@ export const deleteProduct = (id) => ({
     payload: id,
 })
 
-export const saveProduct = (product) => ({
+export const saveProduct=(product, history) =>({
     type: SAVE_PRODUCT,
     payload: product,
+    history: history
 })
 
 export const setNameAddProduct = (name) => ({

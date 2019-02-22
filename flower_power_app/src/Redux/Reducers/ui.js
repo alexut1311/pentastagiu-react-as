@@ -10,6 +10,7 @@ export function uiReducer(state = {
     showSpinner: false,
     productEdit: false,
     productAdd: false,
+    shoppingCart: [],
 }, action) {
 
     switch(action.type) {

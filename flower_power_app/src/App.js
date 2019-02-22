@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from './components/header/header';
-import Button from '@material-ui/core/Button';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/index.js';
@@ -14,9 +13,11 @@ import { startEditProduct, finishEditProduct, startAddProduct, finishAddProduct 
 import { Route , Switch } from "react-router-dom";
 
 const NotFound = (props) => (
-  <h2>Page not found</h2>
+  <h2 className="simple-page">Page not found</h2>
 );
-
+const ShoppingCart = (props) => (
+  <h2 className="simple-page">Shopping Cart</h2>
+)
 
 class App extends Component {
   constructor(props){
@@ -50,34 +51,32 @@ class App extends Component {
     this.props._saveProduct();
   }
 
-
+  
 
   render() {
     console.log(this.props)
     return (
       <div className="App">
-      <Header />
-      <div className="button-add">
-      <Button variant="outlined" onClick={this.addCard}>
-      Add product
-      </Button>
-      </div>
-
+      <Header history={this.props.history} orderCount={this.props.ui.shoppingCart.length}/>
 
       <Switch>
+      
+      <Route path="/shopping-cart" component={ShoppingCart} />
 
       <Route path="/add-product" component={(props) => (
-        <AddCard history={this.props.history}/>
+        <AddCard {...props}/>
       )}/>
 
       <Route path="/product/:productId" component={(props) => (
         <EditCard 
-        product={this.props.product} 
-        history={this.props.history}/> 
+        {...props}
+        product={this.props.product}/> 
       )}/>
 
       <Route exact path="/" component={() => (
+        
         <Content 
+        addCard={this.addCard}
         handleClick={this.handleClick}
         allData={this.props.products}
         product={this.props.product}

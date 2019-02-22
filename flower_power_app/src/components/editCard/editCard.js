@@ -67,7 +67,6 @@ class EditCard extends PureComponent {
     this.onPriceChange();
     this.onPhotoUrlChange();
     this.props._setSaveProduct();
-    this.props.history.push('/');
   }
 
   onExit = () => {
@@ -125,7 +124,8 @@ class EditCard extends PureComponent {
        </List>
         
         
-        <Button variant="outlined" color="primary" onClick={this.onSave}>
+        <Button variant="outlined" color="primary" onClick={this.onSave}
+        disabled={this.state.name === '' || this.state.description === '' || this.state.unitPrice === ''}>
            Save
         </Button>&nbsp;&nbsp;
       
@@ -148,12 +148,12 @@ const mapStateToProps = (state) => ({
   product: state.products.product
 });
   
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     _setNameProduct: (name) => dispatch(setNameProduct(name)),
     _setDescriptionProduct: (description) => dispatch(setDescriptionProduct(description)),
     _setPriceProduct: (price) => dispatch(setPriceProduct(price)),
     _setPhotoUrlProduct: (photoUrl) => dispatch(setPhotoUrlProduct(photoUrl)),
-    _setSaveProduct: () => dispatch(setSaveProduct()),
+    _setSaveProduct: () => dispatch(setSaveProduct(ownProps.history)),
     _resetProduct:() => dispatch(resetProduct()),
   });
 

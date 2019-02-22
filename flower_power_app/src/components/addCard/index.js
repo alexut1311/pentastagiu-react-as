@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { connect } from "react-redux";
+import "./addCard.css";
+import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
-import "./addCard.css";
-import { saveProduct } from "../../Redux/Middleware/products";
+import { saveProduct } from "../../Redux/Actions/products";
 import { resetProduct } from "../../Redux/Actions/products";
 
 
@@ -21,28 +21,28 @@ class AddCard extends PureComponent {
     };
   }
   
-  onSubmit = (e) => {
+  onSubmit = (e) =>{
     e.preventDefault();
     const newProduct = this.state;
     this.props._saveProduct(newProduct);
-    this.props.history.push('/');
   }
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }   
 
   onExit = () => {
     this.props._resetProduct();
     this.props.history.push('/');
   }
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }  
+ 
 
 
   render() {
     return (
-      
+      <form >
       <div className="content-card modal">
         <List>
           <ListItem>
@@ -83,7 +83,8 @@ class AddCard extends PureComponent {
          </ListItem>
        </List>
 
-        <Button variant="outlined" color="primary" onClick={this.onSubmit}>
+        <Button variant="outlined" color="primary" onClick={this.onSubmit}
+        disabled={this.state.name === '' || this.state.description === '' || this.state.unitPrice === ''} >
            Save
         </Button>&nbsp;&nbsp;
         
@@ -93,14 +94,15 @@ class AddCard extends PureComponent {
 
         
       </div>
+      </form>
     );
   }
 }
 
 const mapStateToProps = (state) => state;
 
-const mapDispatchToProps = (dispatch) => ({
-  _saveProduct: (product) => dispatch(saveProduct(product)) ,
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  _saveProduct: (product) => dispatch(saveProduct(product, ownProps.history))  ,
   _resetProduct:() => dispatch(resetProduct()),
 })
 

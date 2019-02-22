@@ -11,6 +11,9 @@ import {
   resetProduct,
   getProducts,
   SAVE_PRODUCT,
+  SAVE_PRODUCT_SUCCESS,
+  RESET_PRODUCT,
+  RESET_PRODUCT_SUCCESS,
 } from "../Actions/products";
 import {
   apiRequest
@@ -20,7 +23,6 @@ import {
   hideLoader,
   PRODUCT_EDIT_STARTED,
   finishEditProduct,
-  finishAddProduct
 } from "../Actions/ui";
 
 export const getProductsFlow = ({
@@ -116,34 +118,41 @@ export const saveProductById = ({
           }
         },
         FETCH_PRODUCT_SAVE_EDIT_SUCCESS,
-        FETCH_PRODUCTS_ERROR
+        FETCH_PRODUCTS_ERROR,
+        action.history,
       )
     );
   }
 };
 
-export const saveProduct = ({
-  dispatch
-}) => next => action => {
+
+export const saveProduct = ({ dispatch }) => next => action => {
   next(action);
 
   if (action.type === SAVE_PRODUCT) {
     dispatch(showLoader());
-    dispatch(finishAddProduct());
     dispatch(
       apiRequest(
         "/products",
-        "POST", {
-          body: {
-            product: action.payload
-          }
-        },
-        GET_PRODUCTS,
-        FETCH_PRODUCTS_ERROR
+        "POST",
+        { body: { product: action.payload } },
+        SAVE_PRODUCT_SUCCESS,
+        FETCH_PRODUCTS_ERROR,
+        action.history
       )
     );
   }
 };
+
+export const saveProductSuccess = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === SAVE_PRODUCT_SUCCESS) {
+      action.extra && action.extra.push('/');
+      dispatch(getProducts());
+  }
+};
+
 
 export const processSaveEditProductCollection = ({
   dispatch
@@ -153,6 +162,7 @@ export const processSaveEditProductCollection = ({
   if (action.type === FETCH_PRODUCT_SAVE_EDIT_SUCCESS) {
     dispatch(hideLoader());
     dispatch(finishEditProduct());
+    action.extra && action.extra.push('/');
     dispatch(getProducts())
     dispatch(resetProduct());
   }
@@ -163,6 +173,7 @@ export const productsMdl = [
   productById,
   processProductCollection,
   saveProductById,
+  saveProductSuccess,
   processSaveEditProductCollection,
   deleteProductById,
   saveProduct,

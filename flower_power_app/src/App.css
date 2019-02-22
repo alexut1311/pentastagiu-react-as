@@ -45,7 +45,8 @@ body {
     transform: rotate(360deg);
   }
 }
-.button-add {
+.simple-page {
   margin-top: 150px;
   margin-left: 25px;
 }
+
