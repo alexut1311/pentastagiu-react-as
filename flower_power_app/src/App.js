@@ -12,19 +12,16 @@ import { getProducts,
 import { startEditProduct, finishEditProduct, startAddProduct, finishAddProduct } from './Redux/Actions/ui';
 import { Route , Switch } from "react-router-dom";
 
-const NotFound = (props) => (
+const NotFound = () => (
   <h2 className="simple-page">Page not found</h2>
 );
-const ShoppingCart = (props) => (
+const ShoppingCart = () => (
   <h2 className="simple-page">Shopping Cart</h2>
 )
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.deleteProduct = this.deleteProduct.bind(this);
-    this.addCard = this.addCard.bind(this);
     this.state = {
       dataById: {},
     }
@@ -33,23 +30,21 @@ class App extends Component {
   componentDidMount(){
     this.props._getAllProducts();
   }
-  handleClick(id) {
+
+  handleClick = (id) => {
     this.props._startEditProduct(id);
     this.props.history.push(`/product/${id}`);
   }
 
-  deleteProduct(id) {
+  deleteProduct = (id) => {
     if (window.confirm('Are you sure you wish to delete this item?'))
     {this.props._deleteProduct(id) }
    }
 
-  addCard(){
+  addCard = () => {
     this.props.history.push('/add-product');
   }
 
-  saveCard(){
-    this.props._saveProduct();
-  }
 
   
 
@@ -81,7 +76,7 @@ class App extends Component {
         allData={this.props.products}
         product={this.props.product}
         deleteProduct={this.deleteProduct}
-        handleChangeTitle={()=> {}} />
+         />
       )}/>
 
       <Route path="*" component={NotFound}/>

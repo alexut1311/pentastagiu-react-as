@@ -32,8 +32,8 @@ class Header extends React.PureComponent {
           <Random text="Flower power app"/>
           </div>
           <IconButton aria-label="Cart" className={this.props.classes.badge }>
-            <Badge text={this.props.orderCount} overlap color="primary" className={this.props.classes.badge } onClick={this.onShoppingCardPress}>
-             <Icon name="shopping_cart"/>
+            <Badge badgeContent={this.props.orderCount} color="primary" className={this.props.classes.badge }>
+             <Icon name="shopping_cart"  onClick={this.onShoppingCardPress} />
             </Badge>
           </IconButton>
         

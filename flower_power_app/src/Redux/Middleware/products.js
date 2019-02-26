@@ -12,8 +12,6 @@ import {
   getProducts,
   SAVE_PRODUCT,
   SAVE_PRODUCT_SUCCESS,
-  RESET_PRODUCT,
-  RESET_PRODUCT_SUCCESS,
 } from "../Actions/products";
 import {
   apiRequest
