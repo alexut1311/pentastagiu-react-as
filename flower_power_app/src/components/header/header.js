@@ -5,14 +5,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/icons/ShoppingCart';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
-const styles = theme => ({
+const styles = () => ({
   badge: {
     top: '50%',
     right: '2%',
-    
-    // The border color match the background color.
-    
+  },
+  add: {
+    width: '2%',
+    height: '2%',
   },
 });
 
@@ -23,7 +26,11 @@ class Header extends React.PureComponent {
   onShoppingCardPress = () => {
     this.props.history.push('/shopping-cart');
   }
-  
+
+  addCard = () => {
+    this.props.history.push('/add-product');
+  }
+
   render(){
   
     return(
@@ -31,6 +38,10 @@ class Header extends React.PureComponent {
           <div className="logo-text">
           <Random text="Flower power app"/>
           </div>
+          <Fab aria-label="Add" onClick={this.addCard} className={this.props.classes.add }>
+          <AddIcon/>
+          </Fab>
+           &nbsp;&nbsp;&nbsp;&nbsp;
           <IconButton aria-label="Cart" className={this.props.classes.badge }>
             <Badge badgeContent={this.props.orderCount} color="primary" className={this.props.classes.badge }>
              <Icon name="shopping_cart"  onClick={this.onShoppingCardPress} />

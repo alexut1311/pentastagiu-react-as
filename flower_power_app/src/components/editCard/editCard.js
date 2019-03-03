@@ -24,9 +24,6 @@ const styles = theme => ({
   },
 });
 
-
-
-
 class EditCard extends PureComponent {
   constructor(props){
     super(props);
@@ -74,9 +71,7 @@ class EditCard extends PureComponent {
     this.props.history.push('/');
   }
 
-
-
-  render() {
+  render() {console.log(this.props)
     return (
       <div className="content-card modal">
         <List className={this.props.classes.root}>
@@ -145,7 +140,9 @@ EditCard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  product: state.products.product
+  product: state.products.product,
+  ui: state.ui,
+  products: state.products.products,
 });
   
 const mapDispatchToProps = (dispatch, ownProps) => ({

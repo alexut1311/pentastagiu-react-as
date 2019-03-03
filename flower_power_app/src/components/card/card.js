@@ -10,7 +10,13 @@ import './card.css';
 import CardActions from '@material-ui/core/CardActions';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { connect } from "react-redux";
+import { deleteProduct } from '../../Redux/Actions/products';
 
 const styles = theme => ({
     card: {
@@ -29,8 +35,23 @@ const styles = theme => ({
 
   });
 
+
 class CardProduct extends React.PureComponent {
-   
+  state = {
+    open: false,
+  };
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  deleteProduct = (id) => {
+    this.props._deleteProduct(id) 
+  };
+
     render() {
         const props = this.props;
         console.log('render Card', props.id);
@@ -55,17 +76,36 @@ class CardProduct extends React.PureComponent {
          </Typography>
         </CardContent>
         <CardActions>
+
           <Button variant="contained" color="primary" className={this.props.classes.button}>
             Add to cart
           </Button>
           <Button variant="contained" color="primary" onClick={() =>props.handleClick(id)} className={this.props.classes.button}>
             Edit<EditIcon/>
           </Button>
-          <Button variant="contained" color="secondary" onClick={() =>props.deleteProduct(id)} className={this.props.classes.button}>
-            Delete
-            <DeleteIcon/>
+          <Button variant="contained" color="secondary" onClick={this.handleClickOpen}>
+          Delete <DeleteIcon/>
+        </Button>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this product?"}</DialogTitle>
+          <DialogContent>
+          <DialogContentText id="alert-dialog-description">This action can not be undone !</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+          <Button variant="outlined" color="primary" onClick={() =>this.deleteProduct(id)}>
+              Agree
           </Button>
-              Delete
+          <Button variant="outlined" color="secondary" onClick={this.handleClose}>
+              Disagree
+          </Button>
+          </DialogActions>
+        </Dialog>
+        
         </CardActions>
       </Card>
               </div>
@@ -77,4 +117,13 @@ CardProduct.propTypes={
     handleClick: PropTypes.func,
     deleteProduct: PropTypes.func,
 }
-export default withStyles(styles)(CardProduct);
+const mapStateToProps = () => ({
+  
+});
+const mapDispatchToProps = (dispatch) => ({
+   _deleteProduct: (id) => dispatch(deleteProduct(id)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(CardProduct));
