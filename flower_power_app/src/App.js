@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/header/header';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
-import AddCard from './components/addCard/index.js';
+import AddCard from './components/addCard/addCard.js/index.js';
 import NotFound from './components/notFound/notFound.js'
 import './App.css';
 import { connect } from "react-redux";

@@ -37,6 +37,7 @@ class Header extends React.PureComponent {
         <header className="App-header">
           <div className="logo-text">
           <Random text="Flower power app"/>
+          
           </div>
           <Fab aria-label="Add" onClick={this.addCard} className={this.props.classes.add }>
           <AddIcon/>
